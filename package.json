@@ -1,0 +1,76 @@
+{
+  "name": "antd-form-multi",
+  "version": "4.0.0-rc1.0.0",
+  "description": "基于antd，通过配置项生成表单，并且拥有表单内数据联动、多级列表控制等功能",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "author": {
+    "name": "CMG-CEO",
+    "email": "li825824661@qq.com",
+    "url": "https://github.com/CMG-CEO"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CMG-CEO/antd-form-multi"
+  },
+  "license": "MIT",
+  "keywords": [
+    "form",
+    "antd",
+    "multi",
+    "react-component"
+  ],
+  "scripts": {
+    "start": "umi dev --port=3600",
+    "build": "npm run clearlib && npm run cleares && cross-env NODE_ENV=production gulp",
+    "clearlib": "rimraf lib",
+    "cleares": "rimraf es",
+    "test": "umi test"
+  },
+  "peerDependencies": {
+    "antd": ">=4.0.0",
+    "react": ">=16.0.0",
+    "react-dom": ">=16.9.0"
+  },
+  "devDependencies": {
+    "@umijs/preset-react": "^1",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-proposal-do-expressions": "^7.2.0",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^5.4.0",
+    "eslint-config-umi": "^0.1.5",
+    "eslint-plugin-flowtype": "^2.50.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.2",
+    "lodash": "^4.17.11",
+    "merge2": "^1.4.1",
+    "rimraf": "^3.0.2",
+    "umi": "^3"
+  },
+  "dependencies": {
+    "@ant-design/compatible": "^1.1.2",
+    "@ant-design/icons": "^4.3.0",
+    "antd": "^4",
+    "crypto-js": "^4.0.0",
+    "dayjs": "^1.11.5",
+    "enquire-js": "0.2.1",
+    "lodash-super": "^1",
+    "react-sortablejs": "^6.1.4",
+    "sortablejs": "^1.15.0"
+  }
+}
