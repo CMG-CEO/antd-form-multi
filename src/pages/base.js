@@ -1,16 +1,15 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Form } from 'antd';
-import WForm from '@/components/FormItemTemp/WForm';
-import FormItemTemp from '@/components/FormItemTemp';
+import { Form, Row } from 'antd';
+import FormItem from '@/components/FormItem';
 
 const Index = (props) => {
-  const [formDB] = Form.useForm();
+  const [form] = Form.useForm();
   return (
     <>
-      <WForm form={formDB} layout="vertical" initialValues={{}}>
-        <FormItemTemp
-          ref={formDB}
+      <Form form={form} layout="vertical" initialValues={{}}>
+        <FormItem
+          ref={form}
           fields={[
             {
               type: 'text',
@@ -18,20 +17,18 @@ const Index = (props) => {
               label: '标题',
               code: 'title',
               span: 24,
-              vertical: true,
-              isrow: true,
             },
             {
               type: 'textarea',
               label: '备注',
               code: 'remark',
-              span: 24,
-              vertical: true,
-              isrow: true,
+              span: 10,
             },
           ]}
-        ></FormItemTemp>
-      </WForm>
+          labelCol={24}
+          wrapperCol={24}
+        ></FormItem>
+      </Form>
     </>
   );
 };

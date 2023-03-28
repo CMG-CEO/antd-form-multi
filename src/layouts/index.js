@@ -16,7 +16,19 @@ const menuNew = [
   },
   {
     label: '一级列表',
-    key: 'oneList',
+    key: 'level1',
+  },
+  {
+    label: '一级列表-联动',
+    key: 'dataLinkLevel1',
+  },
+  {
+    label: '二级列表',
+    key: 'level2',
+  },
+  {
+    label: '二级列表-联动',
+    key: 'dataLinkLevel2',
   },
 ];
 const handleMenu = ({ key }) => {

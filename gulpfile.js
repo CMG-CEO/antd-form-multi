@@ -3,8 +3,8 @@ const babel = require('gulp-babel');
 const merge = require('merge2');
 
 // 文件目录地址
-const jsSrc = 'src/components/FormItemTemp/*.js';
-const lessSrc = 'src/components/FormItemTemp/*.less';
+const jsSrc = 'src/components/**/*.js';
+const lessSrc = 'src/components/**/*.less';
 const libPath = 'lib';
 const esPath = 'es';
 const stylePath = 'style';
