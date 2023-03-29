@@ -11,7 +11,7 @@ const Checkbox = (props) => {
     validator,
     width,
     range,
-    dict,
+    options,
     // 以上
     onBlur,
     onChange,
@@ -36,9 +36,13 @@ const Checkbox = (props) => {
         {...option}
       >
         <Space direction={option.direction}>
-          {dict.map((item) => (
-            <CheckboxAnt disabled={!!item.disabled} key={item.id} value={item.id}>
-              {item.name}
+          {options.map((item) => (
+            <CheckboxAnt
+              disabled={!!item.disabled}
+              key={item.id || item.value}
+              value={item.id || item.value}
+            >
+              {item.name || item.label}
             </CheckboxAnt>
           ))}
         </Space>

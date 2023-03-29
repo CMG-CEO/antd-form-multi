@@ -13,7 +13,6 @@ const Transfer = (props) => {
     rules,
     width,
     range,
-    dict,
     // 以上
     onBlur,
     onChange,

@@ -32,7 +32,7 @@ const DataLinkLevel2Index = (props) => {
                 label: '规则选择(一)',
                 code: 'rules1',
                 span: 12,
-                dict: [
+                options: [
                   {
                     id: '1-1',
                     name: '规则1-1',
@@ -84,7 +84,7 @@ const DataLinkLevel2Index = (props) => {
                 label: '规则选择(一)',
                 code: 'rules1',
                 span: 12,
-                dict: [
+                options: [
                   {
                     id: '1-1',
                     name: '规则1-1',
@@ -132,6 +132,13 @@ const DataLinkLevel2Index = (props) => {
         ></FormItem>
       </Form>
       <Button onClick={addHandle}> 添加一项</Button>
+      <Button
+        onClick={() => {
+          console.log('form', form.getFieldsValue());
+        }}
+      >
+        表单参数
+      </Button>
     </>
   );
 };

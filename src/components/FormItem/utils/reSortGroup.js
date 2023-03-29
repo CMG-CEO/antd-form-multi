@@ -9,6 +9,7 @@ import _ from 'lodash';
  */
 const reSortGroup = (groupValue, type, nameList, afterName) => {
   const [name, uplevelname] = nameList;
+
   if (uplevelname !== undefined) {
     return reSortGroup2(groupValue, type, nameList, afterName);
   }
@@ -59,6 +60,26 @@ const reSortGroup2 = (groupValue, type, nameList, afterName) => {
         i[1] = afterName;
       } else if (i[0] === uplevelname && i[1] === afterName) {
         i[1] = name;
+      }
+    });
+  }
+
+  return groupValue;
+};
+
+export const reSortGroupAll2 = (groupValue, type, nameList, afterName) => {
+  const [name, uplevelname] = nameList;
+  if (type === 'add') {
+    let groupValueClone = groupValue.filter((i) => i[0] === name);
+    groupValueClone.forEach((i) => {
+      groupValue.push([afterName, i[1], i[2]]);
+    });
+  } else if (type === 'move') {
+    groupValue.forEach((i) => {
+      if (i[0] === name) {
+        i[0] = afterName;
+      } else if (i[0] === afterName) {
+        i[0] = name;
       }
     });
   }

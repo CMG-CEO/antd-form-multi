@@ -12,7 +12,7 @@ const AutoComplete = (props) => {
     validator,
     width,
     range,
-    dict,
+    options,
     // 以上
     onBlur,
     onChange,
@@ -22,17 +22,17 @@ const AutoComplete = (props) => {
   const newDict = [];
   // eslint-disable-next-line no-lone-blocks
   {
-    _.isArray(dict)
-      ? dict.forEach((item) => {
+    _.isArray(options)
+      ? options.forEach((item) => {
           newDict.push({
-            label: item.name,
-            value: item.id,
+            label: item.name || item.label,
+            value: item.id || item.value,
           });
         })
-      : dict().forEach((item) => {
+      : options().forEach((item) => {
           newDict.push({
-            label: item.name,
-            value: item.id,
+            label: item.name || item.label,
+            value: item.id || item.value,
           });
         });
   }

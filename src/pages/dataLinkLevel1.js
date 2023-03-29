@@ -25,7 +25,7 @@ const DataLinkLevel1Index = (props) => {
                 label: '规则选择(一)',
                 code: 'rules1',
                 span: 12,
-                dict: [
+                options: [
                   {
                     id: '1-1',
                     name: '规则1-1',

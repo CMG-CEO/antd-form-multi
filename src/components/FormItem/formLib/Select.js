@@ -13,7 +13,7 @@ const Select = (props) => {
     dataDisplayType,
     width,
     range,
-    dict,
+    options,
     refresh,
     autoMatch,
     dropdownRenderContentFlase,
@@ -29,7 +29,7 @@ const Select = (props) => {
 
   const dropdownRenderContent = (params) => {
     let dropdownRenderContent = null;
-    if (refresh === 1 && dict.length === 0) {
+    if (refresh === 1 && options.length === 0) {
       dropdownRenderContent = (
         <Row type="flex" style={{ width: '100%' }} justify="center" align="middle" gutter={[12]}>
           <Button onClick={() => onRefresh()} size="small">
@@ -42,7 +42,7 @@ const Select = (props) => {
       dropdownRenderContent = dropdownRenderContentItem;
     } else {
       dropdownRenderContent =
-        !!multiple && dict.length > 0 ? (
+        !!multiple && options.length > 0 ? (
           <>
             <Row
               type="flex"
@@ -95,7 +95,7 @@ const Select = (props) => {
         showArrow={true}
         allowClear={!!!required || !!multiple}
         dropdownStyle={{ maxHeight: 250, overflow: 'auto' }}
-        treeData={dict}
+        treeData={options}
         placeholder={'请选择'}
         {...option}
       />
@@ -181,17 +181,19 @@ const Select = (props) => {
         style={{ width: width ? width : '100%' }}
         {...option}
       >
-        {_.isArray(dict)
-          ? dict.map((item, index) => (
-              <SelectAnt.Option key={item.id} value={item.id}>
-                {item.name}
+        {_.isArray(options)
+          ? options.map((item) => (
+              <SelectAnt.Option key={item.id || item.value} value={item.id || item.value}>
+                {item.name || item.label}
               </SelectAnt.Option>
             ))
-          : dict(props.field.name, upLevelname).map((item, index) => (
-              <SelectAnt.Option key={item.id} value={item.id}>
-                {item.name}
+          : typeof options === 'function'
+          ? options(props.field.name, upLevelname).map((item) => (
+              <SelectAnt.Option key={item.id || item.value} value={item.id || item.value}>
+                {item.name || item.label}
               </SelectAnt.Option>
-            ))}
+            ))
+          : null}
       </SelectAnt>
     </Form.Item>
   );

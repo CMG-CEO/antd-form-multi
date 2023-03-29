@@ -5,7 +5,7 @@ import { ReactSortable } from 'react-sortablejs';
 import { wrapComponentLevel1, wrapComponentLevel2, sortableNull } from './FormWrapCard';
 
 import { isGroupLevel1, isGroupLevel2 } from './utils/groupValidate';
-import reSortGroup from './utils/reSortGroup';
+import reSortGroup, { reSortGroupAll2 } from './utils/reSortGroup';
 import { formItemLayoutHandle } from './utils/constants';
 
 import {
@@ -64,9 +64,9 @@ class FormItemTemp extends PureComponent {
   };
 
   handelSelectAll = (isSelectAll, item, onChange, self, upLevelname) => {
-    let { dict, code } = item;
-    if (typeof dict === 'function') {
-      dict = dict(self, upLevelname);
+    let { options, code } = item;
+    if (typeof options === 'function') {
+      options = options(self, upLevelname);
     }
     const currValue = this.formRef?.current?.getFieldValue(code);
     let values = [];
@@ -80,7 +80,7 @@ class FormItemTemp extends PureComponent {
 
     if (this.keyword === undefined || this.keyword === '') {
       if (isSelectAll) {
-        values = (dict || []).map((item) => {
+        values = (options || []).map((item) => {
           return item[textValue.value] !== undefined ? item[textValue.value] : item['id'];
         });
       } else {
@@ -88,7 +88,7 @@ class FormItemTemp extends PureComponent {
       }
     } else {
       //如果有搜索，则只选择/反选搜索结果数据
-      const searchResult = (dict || []).filter((item) => {
+      const searchResult = (options || []).filter((item) => {
         return item[textValue.text].indexOf(this.keyword) > -1;
       });
 
@@ -224,31 +224,60 @@ class FormItemTemp extends PureComponent {
   };
 
   wrapCopy = (field, add, level = 'level1', uplevelname) => {
-    let { groupValue, name } = this.props[level];
-    const fieldValue = this.formRef.current.getFieldValue(name);
-    if (groupValue) {
-      reSortGroup(groupValue, 'add', [field.name, uplevelname], fieldValue.length);
+    let { groupValue: groupLevel1, name: nameLevel1 } = this.props.level1 || {};
+    let { groupValue: groupLevel2, name: nameLevel2 } = this.props.level2 || {};
+
+    if (level === 'level1') {
+      const fieldValue = this.formRef.current.getFieldValue(nameLevel1);
+      !!groupLevel1 && reSortGroup(groupLevel1, 'add', [field.name], fieldValue.length);
+      !!groupLevel2 && reSortGroupAll2(groupLevel2, 'add', [field.name], fieldValue.length);
+      add(fieldValue[field.name]);
+      this.formRef.current.setFieldValue(
+        [...nameLevel1, fieldValue.length],
+        fieldValue[field.name]
+      );
     }
-    add(fieldValue[field.name]);
-    this.formRef.current.setFieldValue([...name, fieldValue.length], fieldValue[field.name]);
+    if (level === 'level2') {
+      const fieldValue = this.formRef.current.getFieldValue([
+        ...nameLevel1,
+        uplevelname,
+        ...nameLevel2,
+      ]);
+
+      reSortGroup(groupLevel2, 'add', [field.name, uplevelname], fieldValue.length);
+      add(fieldValue[field.name]);
+      this.formRef.current.setFieldValue(
+        [...nameLevel1, uplevelname, ...nameLevel2, fieldValue.length],
+        fieldValue[field.name]
+      );
+    }
   };
   wrapUpMove = (field, move, level = 'level1', uplevelname) => {
-    let { groupValue } = this.props[level];
+    let { groupValue: groupLevel1 } = this.props.level1 || {};
+    let { groupValue: groupLevel2 } = this.props.level2 || {};
     if (field.name !== 0) {
-      if (groupValue) {
-        reSortGroup(groupValue, 'move', [field.name, uplevelname], field.name - 1);
+      if (level === 'level1') {
+        !!groupLevel1 && reSortGroup(groupLevel1, 'move', [field.name], field.name - 1);
+        !!groupLevel2 && reSortGroupAll2(groupLevel2, 'move', [field.name], field.name - 1);
       }
-      return move(field.name, field.name - 1);
+      if (level === 'level2') {
+        reSortGroup(groupLevel2, 'move', [field.name, uplevelname], field.name - 1);
+      }
+      move(field.name, field.name - 1);
     }
   };
-  wrapDownMove = (field, move, level = 'level1', uplevelname) => {
-    let { groupValue, name } = this.props[level];
-    const fieldValue = this.formRef.current.getFieldValue(name);
-    if (field.name !== fieldValue.length - 1) {
-      if (groupValue) {
-        reSortGroup(groupValue, 'move', [field.name, uplevelname], field.name + 1);
+  wrapDownMove = (field, move, level = 'level1', uplevelname, fields) => {
+    let { groupValue: groupLevel1 } = this.props.level1 || {};
+    let { groupValue: groupLevel2 } = this.props.level2 || {};
+    if (field.name !== fields.length - 1) {
+      if (level === 'level1') {
+        !!groupLevel1 && reSortGroup(groupLevel1, 'move', [field.name], field.name + 1);
+        !!groupLevel2 && reSortGroupAll2(groupLevel2, 'move', [field.name], field.name + 1);
       }
-      return move(field.name, field.name + 1);
+      if (level === 'level2') {
+        reSortGroup(groupLevel2, 'move', [field.name, uplevelname], field.name + 1);
+      }
+      move(field.name, field.name + 1);
     }
   };
   itemComponents = (item, field = {}) => {
@@ -343,6 +372,7 @@ class FormItemTemp extends PureComponent {
     }
     return temp;
   };
+
   render() {
     const { labelCol, wrapperCol, offset } = this.props;
     const fields = this.props.fields || [];
@@ -359,6 +389,7 @@ class FormItemTemp extends PureComponent {
       wrapName: wrapNamelevel1,
       wrapCopy: wrapCopylevel1,
       wrapMove: wrapMovelevel1,
+      sortable: wrapSortable1,
     } = this.props.level1 || {};
 
     let {
@@ -384,7 +415,7 @@ class FormItemTemp extends PureComponent {
     WrapLevel2 = WrapLevel2 || wrapComponentLevel2;
     wrapActionLevel2 = wrapActionLevel2 || this.wrapCardAction;
 
-    const Sortable = wrapMovelevel1 ? ReactSortable : sortableNull;
+    const Sortable = wrapSortable1 ? ReactSortable : sortableNull;
 
     // 默认布局
     const formItemLayout = formItemLayoutHandle(labelCol, wrapperCol, offset);
@@ -439,7 +470,7 @@ class FormItemTemp extends PureComponent {
                         remove={() => this.wrapRemove(field, remove)}
                         copy={() => this.wrapCopy(field, add)}
                         upMove={() => this.wrapUpMove(field, move)}
-                        downMove={() => this.wrapDownMove(field, move)}
+                        downMove={() => this.wrapDownMove(field, move, 'level1', null, fields)}
                       >
                         {fieldsLevel1.map((item) => {
                           // 判断 每一项的组是否有在 规则内 有则渲染，没有则不渲染
@@ -510,7 +541,13 @@ class FormItemTemp extends PureComponent {
                                       this.wrapUpMove(_fieldLevel2, move2, 'level2', field.name)
                                     }
                                     downMove={() =>
-                                      this.wrapDownMove(_fieldLevel2, move2, 'level2', field.name)
+                                      this.wrapDownMove(
+                                        _fieldLevel2,
+                                        move2,
+                                        'level2',
+                                        field.name,
+                                        _fieldsLevel2
+                                      )
                                     }
                                   >
                                     {fieldsLevel2.map((_fl2Item) => {

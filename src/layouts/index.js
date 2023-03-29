@@ -19,9 +19,10 @@ const menuNew = [
     key: 'level1',
   },
   {
-    label: '一级列表-联动',
+    label: '一级列表-内在联动',
     key: 'dataLinkLevel1',
   },
+
   {
     label: '二级列表',
     key: 'level2',

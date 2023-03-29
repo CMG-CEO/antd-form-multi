@@ -11,7 +11,7 @@ const Radio = (props) => {
     validator,
     width,
     range,
-    dict,
+    options,
     // 以上
     onBlur,
     onChange,
@@ -35,14 +35,22 @@ const Radio = (props) => {
         onChange={(e) => props.handelTargetChange(e, onChange, props.field.name, upLevelname)}
         {...option}
       >
-        {dict?.map((item) => {
+        {options?.map((item) => {
           return type === 'radio' ? (
-            <RadioAnt disabled={!!item.disabled} key={item.id} value={item.id}>
-              {item.name}
+            <RadioAnt
+              disabled={!!item.disabled}
+              key={item.id || item.value}
+              value={item.id || item.value}
+            >
+              {item.name || item.label}
             </RadioAnt>
           ) : (
-            <RadioAnt.Button disabled={!!item.disabled} key={item.id} value={item.id}>
-              <div>{item.name}</div>
+            <RadioAnt.Button
+              disabled={!!item.disabled}
+              key={item.id || item.value}
+              value={item.id || item.value}
+            >
+              <div>{item.name || item.label}</div>
             </RadioAnt.Button>
           );
         })}

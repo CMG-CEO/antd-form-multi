@@ -19,7 +19,7 @@ const DataLinkIndex = (props) => {
               label: '规则选择(一)',
               code: 'rules1',
               span: 24,
-              dict: [
+              options: [
                 {
                   id: '1-1',
                   name: '规则1-1',
@@ -45,7 +45,7 @@ const DataLinkIndex = (props) => {
               label: '规则选择(二)',
               code: 'rules2',
               span: 24,
-              dict: [
+              options: [
                 {
                   id: '2-1',
                   name: '规则2-1',
