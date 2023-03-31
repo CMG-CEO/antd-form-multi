@@ -15,7 +15,6 @@ const DataLinkLevel1Index = (props) => {
       <Form form={form} layout="vertical" initialValues={{}}>
         <FormItem
           ref={form}
-          groupListValue={groupListValue}
           level1={{
             name: ['list'],
             fields: [

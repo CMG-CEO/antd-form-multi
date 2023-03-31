@@ -29,4 +29,9 @@ export default {
   chainWebpack(config, { webpack }) {
     config.module.rule('mjs-rule').test(/.m?js/).resolve.set('fullySpecified', false);
   },
+  publicPath: './',
+  base: './',
+  history: {
+    type: 'hash',
+  },
 };

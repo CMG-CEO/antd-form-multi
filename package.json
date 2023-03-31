@@ -1,6 +1,6 @@
 {
   "name": "antd-form-multi",
-  "version": "4.0.0-rc1.0.0",
+  "version": "4.0.1",
   "description": "基于antd，通过配置项生成表单，并且拥有表单内数据联动、多级列表控制等功能",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -25,7 +25,8 @@
     "build": "npm run clearlib && npm run cleares && cross-env NODE_ENV=production gulp",
     "clearlib": "rimraf lib",
     "cleares": "rimraf es",
-    "test": "umi test"
+    "test": "umi test",
+    "build-prod": "umi build --report"
   },
   "peerDependencies": {
     "antd": ">=4.0.0",
@@ -70,7 +71,6 @@
     "crypto-js": "^4.0.0",
     "dayjs": "^1.11.5",
     "enquire-js": "0.2.1",
-    "lodash-super": "^1",
     "react-sortablejs": "^6.1.4",
     "sortablejs": "^1.15.0"
   }

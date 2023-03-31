@@ -282,6 +282,15 @@ class FormItemTemp extends PureComponent {
   };
   itemComponents = (item, field = {}) => {
     let temp = null;
+    const plugin = this.props || [];
+    for (let index = 0; index < plugin.length; index += 1) {
+      const element = plugin[index];
+      if (element.type === item.type) {
+        temp = element.component;
+        return;
+      }
+    }
+
     switch (item.type) {
       case 'datePicker':
       case 'rangePicker':
