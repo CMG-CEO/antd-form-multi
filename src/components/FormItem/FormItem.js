@@ -286,7 +286,7 @@ class FormItemTemp extends PureComponent {
     for (let index = 0; index < plugin.length; index += 1) {
       const element = plugin[index];
       if (element.type === item.type) {
-        temp = element.component;
+        temp = element.component(item,field);
         return;
       }
     }

@@ -16,7 +16,7 @@
 
 `yarn add antd-form-multi`
 
-在组件内的<Form>（antd组件）内引用
+在组件内的`<Form>`（antd组件）内引用
 
 `import FormItem from 'antd-form-multi'`
 
