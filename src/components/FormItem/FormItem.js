@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Form } from 'antd';
-import { Button, Divider, Row, Col, Space } from 'antd';
+import { Form, Col } from 'antd';
 import { ReactSortable } from 'react-sortablejs';
 import { wrapComponentLevel1, wrapComponentLevel2, sortableNull } from './FormWrapCard';
 
@@ -420,7 +419,7 @@ class FormItemTemp extends PureComponent {
     WrapLevel1 = WrapLevel1 || wrapComponentLevel1;
     wrapActionLevel1 = wrapActionLevel1 || this.wrapCardAction;
 
-    nameLevel2 = _.isArray(nameLevel2) ? nameLevel2 : [nameLevel2];
+    nameLevel2 = nameLevel2 ? (_.isArray(nameLevel2) ? nameLevel2 : [nameLevel2]) : '';
     WrapLevel2 = WrapLevel2 || wrapComponentLevel2;
     wrapActionLevel2 = wrapActionLevel2 || this.wrapCardAction;
 

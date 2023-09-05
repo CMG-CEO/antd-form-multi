@@ -1,6 +1,6 @@
 {
   "name": "antd-form-multi",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "基于antd，通过配置项生成表单，并且拥有表单内数据联动、多级列表控制等功能",
   "main": "lib/index.js",
   "module": "es/index.js",

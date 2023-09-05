@@ -52,6 +52,13 @@ const Level1SimpleIndex = (props) => {
         ></FormItem>
       </Form>
       <Button onClick={addHandle}> 添加一项</Button>
+      <Button
+        onClick={() => {
+          console.log('form', form.getFieldsValue());
+        }}
+      >
+        表单参数
+      </Button>
     </>
   );
 };
